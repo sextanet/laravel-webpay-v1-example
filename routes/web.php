@@ -4,12 +4,17 @@ use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use App\Livewire\Settings\TwoFactor;
+use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+
+Route::get('pay/{order}', function (Order $order) {
+    return $order->payWithWebpay();
+})->name('pay.order');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
